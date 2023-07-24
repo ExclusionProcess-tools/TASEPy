@@ -3,7 +3,7 @@ TASEPy is a python package providing a numerical solution for the inhomogeneous 
 
 All numerical methods are implemented in Python 3.
 
-## Tutotial
+## Tutorial
 
 A short tutorial demonstrating TASEPy is given in this [python notebook](<tutorial_TASEPy.ipynb>).
 

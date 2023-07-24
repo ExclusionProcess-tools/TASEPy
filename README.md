@@ -5,7 +5,7 @@ All numerical methods are implemented in Python 3.
 
 ## Tutotial
 
-A short tutorial demonstrating TASEPy is given in this [python notebook](<demos/tutorial_TASEPy.ipynb>).
+A short tutorial demonstrating TASEPy is given in this [python notebook](<tutorial_TASEPy.ipynb>).
 
 ## Benchmarks
 

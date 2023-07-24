@@ -1,5 +1,5 @@
 # TASEPy
-TASEPy is a python package providing a numerical solution for the inhomogeneous Totally Asymmetric Simple Exclusion Process (TASEP). In this package we provide an implementation of the Power Series Approximation (PSA) introduced in [1,2]. The iterative solution we propose here is detailed in the affiliated paper [3].
+TASEPy is a python package providing a numerical solution for the inhomogeneous Totally Asymmetric Simple Exclusion Process (TASEP) in the stationary state. The package provides an implementation of the Power Series Approximation (PSA) introduced in [1,2]. The iterative solution proposed here is detailed in the affiliated paper [3].
 
 A short tutorial is given in this [python notebook](<demos/tutorial_TASEPy.ipynb>).
 

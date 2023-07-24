@@ -7,7 +7,7 @@ All numerical methods are implemented in Python 3.
 
 ## Benchmarks
 
-The TASEPy has been tested using exact results for small systems, and numerical results from stochastic simulations for large systems. These tests can be found in this [python notebook](<TASEPy_benchmarks.ipynb>)  
+The TASEPy has been tested using exact results obtained by solving the master equation for small systems, and numerical results obtained by stochastic simulations for large systems. These tests can be found in this [python notebook](<TASEPy_benchmarks.ipynb>).
 
 ## Bibliography
 [1] J Szavits-Nossan, L Ciandrini, MC Romano, Deciphering mRNA Sequence Determinants of Protein Production Rate, *Physical Review Letters* 120, 128101

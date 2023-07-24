@@ -12,9 +12,9 @@ A short tutorial demonstrating TASEPy is given in this [python notebook](<tutori
 The TASEPy has been tested using exact results obtained by solving the master equation for small systems, and numerical results obtained by stochastic simulations for large systems. These tests can be found in this [python notebook](<benchmarks_TASEPy.ipynb>).
 
 ## Bibliography
-[1] J. Szavits-Nossan, L. Ciandrini and M. C. Romano, Deciphering mRNA Sequence Determinants of Protein Production Rate, *Physical Review Letters* 120, 128101 (2018)
+[1] J. Szavits-Nossan, L. Ciandrini and M. C. Romano, Deciphering mRNA Sequence Determinants of Protein Production Rate, *Physical Review Letters* 120, 128101 (2018) \[[url](https://doi.org/10.1103/PhysRevLett.120.128101)\]
 
-[2] J. Szavits-Nossan, M. C. Romano and L. Ciandrini, Power series solution of the inhomogeneous exclusion process, *Physical Review E* 97, 052139 (2018)
+[2] J. Szavits-Nossan, M. C. Romano and L. Ciandrini, Power series solution of the inhomogeneous exclusion process, *Physical Review E* 97, 052139 (2018) \[[url](https://doi.org/10.1103/PhysRevE.97.052139)\]
 
 [3] L. Ciandrini, R. Crisostomo, J. Szavits-Nossan, *preprint* (2023)
 

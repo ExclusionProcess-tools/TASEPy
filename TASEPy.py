@@ -1,6 +1,6 @@
 ###############################################################################
 #
-#       TASEPy v0.3-alpha
+#       TASEPy v0.2-alpha
 #                               July 2023
 #
 #       Based on Crisostomo et al., 2023
@@ -183,7 +183,7 @@ def c_1(xlist, wlist):
  
 ###############################################################################
 #
-# DEFINE: Performs the PSA up to given order.
+# DEFINE: Performs the PSA up to a given order.
 #
 ############################################################################### 
  
@@ -333,8 +333,8 @@ def psa_compute(wlist, K, ll=1):
         
       # updates the local density coefficients
       for particle_number in range(N):
-        pos_x = X[particle_number]-1 # particle position shifted by -1
-        rhocoeff_sum[pos_x] += coeff
+         pos_x = X[particle_number]-1 # particle position shifted by -1
+         rhocoeff_sum[pos_x] += coeff
   
     Jcoeff.append(Jcoeff_sum)
  
@@ -379,9 +379,16 @@ def local_density(rhocoeff, alpha):
 #
 ############################################################################### 
 
-def mean_density(vector):
+def mean_density(local_density):
 
-  return sum(vector)/len(vector)
+  mean_rho = []
+  n = 0
+  for local_density_n in local_density:
+    rho_n = sum(local_density_n)/len(local_density_n)
+    mean_rho.append(rho_n)
+    n += 0
+    
+  return mean_rho
 
 
 
@@ -405,5 +412,3 @@ def current(Jcoeff, alpha):
     J.append(J_sum)
 
   return J
-
-

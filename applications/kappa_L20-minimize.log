@@ -1,0 +1,6 @@
+status : 2
+success : False
+message : Maximum number of function evaluations has been exceeded.
+nfev : 50000
+fun : 0.0002803640536892272
+maxcv : 0.0

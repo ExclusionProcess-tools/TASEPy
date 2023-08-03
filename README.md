@@ -16,5 +16,5 @@ The TASEPy has been tested using exact results obtained by solving the master eq
 
 [2] J. Szavits-Nossan, M. C. Romano and L. Ciandrini, Power series solution of the inhomogeneous exclusion process, *Physical Review E* 97, 052139 (2018) \[[url](https://doi.org/10.1103/PhysRevE.97.052139)\]
 
-[3] L. Ciandrini, R. Crisostomo, J. Szavits-Nossan, *preprint* (2023)
+[3] L. Ciandrini, R. Crisostomo, J. Szavits-Nossan, *preprint* arXiv:2308.00847 \[[url]([https://doi.org/10.1103/PhysRevE.97.052139](https://arxiv.org/abs/2308.00847)https://arxiv.org/abs/2308.00847)\] (2023)
 

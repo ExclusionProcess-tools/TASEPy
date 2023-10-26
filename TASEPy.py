@@ -1,7 +1,7 @@
 ###############################################################################
 #
 #       TASEPy v1.0
-#                               July 2023
+#                               October 2023
 #
 #       Based on Ciandrini et al., 2023
 #
@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import csv
+from scipy.special import comb as choose
 
 ###############################################################################
 #
@@ -70,6 +71,70 @@ def stacked_config(npsa, L, ll=1):
     
   return x
   
+
+
+###############################################################################
+#
+# DEFINE: Returns the number of non-zero coefficients of a given PSA order.
+#
+###############################################################################
+
+def nonzero_coeffs(n, L, ll=1):
+  '''
+  Returns the number of non-zero coefficients of a given order PSA order n, 
+  given the lattice size L and the particle size ll.
+  '''
+
+  if n == 0:
+    return 1
+
+  elif n > 0:
+    sum_i = np.zeros(n)  
+    for ii in range(n):
+      i = ii + 1
+      term_i1 = choose(L-i*ll+i,i)
+      sum_k = np.zeros(ll-1)    
+      for kk in range(ll-1):
+        k = kk + 1
+        term_k = choose(L-k-(i-1)*ll+i-1,i-1)
+        sum_k[kk] = term_k
+      term_i2 = np.sum(sum_k)
+      sum_i[ii] = term_i1 + term_i2
+
+    Cn = 1 + np.sum(sum_i)
+      
+    return Cn
+
+
+###############################################################################
+#
+# DEFINE: Returns the total number of all non-zero coefficients up to a given
+# PSA order. 
+#
+###############################################################################
+
+def total_coeffs(K, L, ll=1):
+  '''
+  Returns the total number of all non-zero coefficients up to a given PSA order
+  K, given the lattice size L and the particle size ll. It is advised to use 
+  this function if one is calling psa_compute with save_coeffs=True, in order to 
+  check how much lines the resulting file will have.
+  '''
+  
+  Nmax = N_max(L, ll)
+  sum_Cn = np.zeros(K+1)
+  for n in range(K+1):
+    Cn = nonzero_coeffs(n, L, ll)
+    sum_Cn[n] = Cn
+
+  if K <= Nmax:
+
+    return np.sum(sum_Cn)
+
+  elif K > Nmax:
+  
+    return np.sum(sum_Cn) + ((K-Nmax)*nonzero_coeffs(Nmax, L, ll))
+
   
   
 ###############################################################################

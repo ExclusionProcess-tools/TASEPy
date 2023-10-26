@@ -129,11 +129,13 @@ def total_coeffs(K, L, ll=1):
 
   if K <= Nmax:
 
-    return np.sum(sum_Cn)
+    result = np.sum(sum_Cn)
+    return result.astype(int)
 
   elif K > Nmax:
   
-    return np.sum(sum_Cn) + ((K-Nmax)*nonzero_coeffs(Nmax, L, ll))
+    result = np.sum(sum_Cn) + ((K-Nmax)*nonzero_coeffs(Nmax, L, ll))
+    return result.astype(int) 
 
   
   
@@ -253,7 +255,7 @@ def c_1(xlist, wlist):
 #
 ############################################################################### 
  
-def psa_compute(wlist, K, ll=1, save_coeff=False, coeff_file='Pcoeff.csv'):
+def psa_compute(wlist, K, ll=1, save_coeffs=False, coeffs_file='Pcoeff.csv'):
   '''
   Computes coefficients of the current and local density for orders 0,...,K.
   '''
@@ -265,8 +267,8 @@ def psa_compute(wlist, K, ll=1, save_coeff=False, coeff_file='Pcoeff.csv'):
   Nmax = N_max(L, ll)
   
   # open file for storing probability coefficients 
-  if save_coeff == True:
-    f=open(coeff_file, 'w', newline='')
+  if save_coeffs == True:
+    f=open(coeffs_file, 'w', newline='')
     writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
     writer.writerow([0,[],1.0]) # add zeroth order coefficient
 
@@ -320,7 +322,7 @@ def psa_compute(wlist, K, ll=1, save_coeff=False, coeff_file='Pcoeff.csv'):
     c_n[str(X)] = coeff
     
     # writes the stacked configuration coefficient to the file
-    if save_coeff == True:
+    if save_coeffs == True:
       writer.writerow([n,np.trim_zeros(X,'b'),coeff])
           
     # updates the local density coefficients
@@ -404,7 +406,7 @@ def psa_compute(wlist, K, ll=1, save_coeff=False, coeff_file='Pcoeff.csv'):
       c_n[str(X)] = coeff
       
       # writes the coefficient to the file
-      if save_coeff == True:
+      if save_coeffs == True:
         writer.writerow([n,np.trim_zeros(X,'b'),coeff])
       
       # updates the current coefficient
@@ -423,7 +425,7 @@ def psa_compute(wlist, K, ll=1, save_coeff=False, coeff_file='Pcoeff.csv'):
       rhocoeff[site_i].append(rho_i_n)
       
   # closes the file
-  if save_coeff == True:
+  if save_coeffs == True:
     f.close()
     
   return rhocoeff, Jcoeff

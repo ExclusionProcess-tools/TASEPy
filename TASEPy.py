@@ -1,7 +1,7 @@
 ###############################################################################
 #
-#       TASEPy v1.0
-#                               July 2023
+#       TASEPy v1.1
+#                               October 2023
 #
 #       Based on Ciandrini et al., 2023
 #
@@ -10,6 +10,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import csv
+from scipy.special import comb as choose
 
 ###############################################################################
 #
@@ -69,6 +71,72 @@ def stacked_config(npsa, L, ll=1):
     
   return x
   
+
+
+###############################################################################
+#
+# DEFINE: Returns the number of non-zero coefficients of a given PSA order.
+#
+###############################################################################
+
+def nonzero_coeffs(n, L, ll=1):
+  '''
+  Returns the number of non-zero coefficients of a given order PSA order n, 
+  given the lattice size L and the particle size ll.
+  '''
+
+  if n == 0:
+    return 1
+
+  elif n > 0:
+    sum_i = np.zeros(n)  
+    for ii in range(n):
+      i = ii + 1
+      term_i1 = choose(L-i*ll+i,i)
+      sum_k = np.zeros(ll-1)    
+      for kk in range(ll-1):
+        k = kk + 1
+        term_k = choose(L-k-(i-1)*ll+i-1,i-1)
+        sum_k[kk] = term_k
+      term_i2 = np.sum(sum_k)
+      sum_i[ii] = term_i1 + term_i2
+
+    Cn = 1 + np.sum(sum_i)
+      
+    return Cn
+
+
+###############################################################################
+#
+# DEFINE: Returns the total number of all non-zero coefficients up to a given
+# PSA order. 
+#
+###############################################################################
+
+def total_coeffs(K, L, ll=1):
+  '''
+  Returns the total number of all non-zero coefficients up to a given PSA order
+  K, given the lattice size L and the particle size ll. It is advised to use 
+  this function if one is calling psa_compute with save_coeffs=True, in order to 
+  check how much lines the resulting file will have.
+  '''
+  
+  Nmax = N_max(L, ll)
+  sum_Cn = np.zeros(K+1)
+  for n in range(K+1):
+    Cn = nonzero_coeffs(n, L, ll)
+    sum_Cn[n] = Cn
+
+  if K <= Nmax:
+
+    result = np.sum(sum_Cn)
+    return result.astype(int)
+
+  elif K > Nmax:
+  
+    result = np.sum(sum_Cn) + ((K-Nmax)*nonzero_coeffs(Nmax, L, ll))
+    return result.astype(int) 
+
   
   
 ###############################################################################
@@ -187,7 +255,7 @@ def c_1(xlist, wlist):
 #
 ############################################################################### 
  
-def psa_compute(wlist, K, ll=1):
+def psa_compute(wlist, K, ll=1, save_coeffs=False, coeffs_file='Pcoeff.csv'):
   '''
   Computes coefficients of the current and local density for orders 0,...,K.
   '''
@@ -196,7 +264,13 @@ def psa_compute(wlist, K, ll=1):
   L = len(wlist)
 
   # finds maximum number of particles
-  Nmax = N_max(L, ll) 
+  Nmax = N_max(L, ll)
+  
+  # open file for storing probability coefficients 
+  if save_coeffs == True:
+    f=open(coeffs_file, 'w', newline='')
+    writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
+    writer.writerow([0,[],1.0]) # add zeroth order coefficient
 
   # initializes the dictionary
   c_n = {}
@@ -246,6 +320,10 @@ def psa_compute(wlist, K, ll=1):
         
     # adds the stacked configuration coefficient to the dictionary c_n
     c_n[str(X)] = coeff
+    
+    # writes the stacked configuration coefficient to the file
+    if save_coeffs == True:
+      writer.writerow([n,np.trim_zeros(X,'b'),coeff])
           
     # updates the local density coefficients
     for particle_number in range(N):
@@ -327,6 +405,10 @@ def psa_compute(wlist, K, ll=1):
       # adds the computed coefficient to the dictionary c_n
       c_n[str(X)] = coeff
       
+      # writes the coefficient to the file
+      if save_coeffs == True:
+        writer.writerow([n,np.trim_zeros(X,'b'),coeff])
+      
       # updates the current coefficient
       if X[0] >= ll+1 or X[0] == 0:
         Jcoeff_sum += coeff
@@ -341,6 +423,10 @@ def psa_compute(wlist, K, ll=1):
     for site_i in range(L):
       rho_i_n = rhocoeff_sum[site_i]
       rhocoeff[site_i].append(rho_i_n)
+      
+  # closes the file
+  if save_coeffs == True:
+    f.close()
     
   return rhocoeff, Jcoeff
   
